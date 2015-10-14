@@ -63,6 +63,7 @@ end
 local function assertGreaterThanTest()
 	printTestMessage(lunit.assertGreaterThanExpected(3,4))
 	printTestMessage(not lunit.assertGreaterThanExpected(4, 3))
+	printTestMessage(lunit.assertGreaterThanExpected(4, 5.3))
 end
 
 
