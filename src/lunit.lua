@@ -49,11 +49,23 @@ function M.fail(msg)
 end
 
 ---------------------------------------------------------------------------------------
---Return true if tested function throws exception and false otherwise.
+-- Return true if tested function throws exception and false otherwise.
 --
 -- @param expression    expression to test
 --
 function M.assertThrowsException(expressionToTest)
   return  not pcall(function() expressionToTest() end)
 end
+
+-----------------------------------------------------------------------------------------
+-- Return true if got approximately equals expected
+-- 
+-- Return true if abs(got - expected) <= delta and false otherwise
+ function M.assertApproximatelyEquals(expected, got, delta)
+ 	local actualDelta = expected - got
+  if actualDelta < 0 then
+    actualDelta = actualDelta * -1
+  end
+  return actualDelta <= delta
+ end
 return M
