@@ -60,6 +60,12 @@ local function assertStringMatchesPatternTest()
 	 "10.14.2015"))
 end
 
+local function assertGreaterThanTest()
+	printTestMessage(lunit.assertGreaterThanExpected(3,4))
+	printTestMessage(not lunit.assertGreaterThanExpected(4, 3))
+end
+
+
 print("assertEquals Test")
 assertEqualsTest()
 print("\nfail() Test")
@@ -70,4 +76,6 @@ print("\nassertApproximatelyEquals() Test")
 assertApproximatelyEqualsTest()
 print("\nassertStringMatchesPattern() Test")
 assertStringMatchesPatternTest()
+print("\nassertGreaterThan() Test")
+assertGreaterThanTest()
 

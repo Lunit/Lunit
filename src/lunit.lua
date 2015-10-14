@@ -84,4 +84,8 @@ function M.assertStringMatchPattern(pattern, actualString)
   end
 end
 
+function M.assertGreaterThanExpected(expected, got)
+  return expected < got
+end
+
 return M
