@@ -40,5 +40,12 @@ local function failTest()
 	printTestMessage(err.message == "Not implemented")
 end
 
+
+local function assertThrowsExceptionsTest()
+	printTestMessage(lunit.assertThrowsException(function() error() end))
+end
+
+
 --assertEqualsTest()
-failTest()
+--failTest()
+assertThrowsExceptionsTest()
