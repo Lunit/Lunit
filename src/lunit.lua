@@ -9,6 +9,8 @@ local M = {}
 
 local type = type
 local error = error
+
+
 -- import section end
 
 -- protect global environment
@@ -59,13 +61,27 @@ end
 
 -----------------------------------------------------------------------------------------
 -- Return true if got approximately equals expected
--- 
+--
 -- Return true if abs(got - expected) <= delta and false otherwise
- function M.assertApproximatelyEquals(expected, got, delta)
- 	local actualDelta = expected - got
+function M.assertApproximatelyEquals(expected, got, delta)
+  local actualDelta = expected - got
   if actualDelta < 0 then
     actualDelta = actualDelta * -1
   end
   return actualDelta <= delta
- end
+end
+
+
+-----------------------------------------------------------------------------
+-- Checks whether got string match expected pattern
+--
+--
+function M.assertStringMatchPattern(pattern, actualString)
+  if (actualString:find(pattern)) then
+    return true
+  else
+    return false
+  end
+end
+
 return M

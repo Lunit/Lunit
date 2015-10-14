@@ -52,8 +52,22 @@ local function assertApproximatelyEqualsTest()
   printTestMessage(not lunit.assertApproximatelyEquals(0, 0.3153, 0.2))
   printTestMessage(lunit.assertApproximatelyEquals(0, -0.3, 0.3))
 end
---assertEqualsTest()
---failTest()
---assertThrowsExceptionsTest()
+
+local function assertStringMatchesPatternTest()
+	printTestMessage(lunit.assertStringMatchPattern(". Not implemented",
+	 "/home/user/scripts/myscript.lua Not implemented"))
+	printTestMessage(lunit.assertStringMatchPattern("%d%d.%d%d.2015",
+	 "10.14.2015"))
+end
+
+print("assertEquals Test")
+assertEqualsTest()
+print("\nfail() Test")
+failTest()
+print("\nassertThrowsException() Test")
+assertThrowsExceptionsTest()
+print("\nassertApproximatelyEquals() Test")
 assertApproximatelyEqualsTest()
+print("\nassertStringMatchesPattern() Test")
+assertStringMatchesPatternTest()
 
