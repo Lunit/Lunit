@@ -66,6 +66,11 @@ local function assertGreaterThanTest()
 	printTestMessage(lunit.assertGreaterThanExpected(4, 5.3))
 end
 
+local function assertLessThanTest()
+	printTestMessage(lunit.assertLessThanExpected(5, 3.0))
+	printTestMessage(not lunit.assertLessThanExpected(-15, 13))
+	printTestMessage(not lunit.assertLessThanExpected(0,0.0))
+end
 
 print("assertEquals Test")
 assertEqualsTest()
@@ -79,4 +84,6 @@ print("\nassertStringMatchesPattern() Test")
 assertStringMatchesPatternTest()
 print("\nassertGreaterThan() Test")
 assertGreaterThanTest()
+print("\nassertLessThan() Test")
+assertLessThanTest()
 

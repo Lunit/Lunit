@@ -60,9 +60,9 @@ function M.assertThrowsException(expressionToTest)
 end
 
 -----------------------------------------------------------------------------------------
--- Return true if got approximately equals expected
+-- Returns true if got approximately equals expected
 --
--- Return true if abs(got - expected) <= delta and false otherwise
+-- Returns true if abs(got - expected) <= delta and false otherwise
 function M.assertApproximatelyEquals(expected, got, delta)
   local actualDelta = expected - got
   if actualDelta < 0 then
@@ -84,8 +84,19 @@ function M.assertStringMatchPattern(pattern, actualString)
   end
 end
 
+--------------------------------------------------------------------------------
+-- Checks whether got number greater than expected
+-- 
 function M.assertGreaterThanExpected(expected, got)
   return expected < got
+end
+
+
+--------------------------------------------------------------------------------
+-- Checks whether got number less than expected
+-- 
+function M.assertLessThanExpected(expected, got)
+  return expected > got
 end
 
 return M
