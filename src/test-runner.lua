@@ -2,14 +2,31 @@
 -- This module provide main fasility for running unit test
 -- on lua projects.
 --
+-- Test suites to run should be specified as arguments to runner script.
+-- All test methods should have test in their names.
+--
 -- @module test-runner
+-- 
+-- 
+
+local M = {}
+
+local ipairs = ipairs
+local pairs = pairs
+local arg = arg
+local string = string
+local pcall = pcall
+local require = require
+
+_ENV = M
+
 
 local function main()
 
-  local testRunner = createTestRunner();
+  local testRunner = M.createTestRunner();
   for i, moduleName in ipairs(arg) do
-  	testRunner:runTestSuite(moduleName)
-  end 
+    testRunner:runTestSuite(moduleName)
+  end
 
 
 end
@@ -20,7 +37,7 @@ end
 -- @param #function     methodUnderTest one of frameworks assertions
 -- @return #table       testCase object
 --
-local function getTestObject (methodUnderTest)
+function M.getTestObject (methodUnderTest)
   obj = {method = methodUnderTest}
   obj.runTest = function (self)
     local status, result = pcall(function() return self.methodUnderTest() end)
@@ -34,22 +51,22 @@ local function getTestObject (methodUnderTest)
 end
 
 
-local function createTestRunner()
-  runner = {}
+function M.createTestRunner()
+  local runner = {}
   runner.runTestSuite = function (self, modulename)
     if not self and not modulename then
       error("self and modulename not specified")
     end
     -- TODO module import settings adjustment
-    moduleUnderTest = require(modulename)
-    testSuite = {}
+    local moduleUnderTest = require(modulename)
+    local testSuite = {}
     for key, testMethod in pairs(moduleUnderTest) do
       if string.match(key, "test") then
-        testSuite[#testSuite + 1] = getTestObject(testMethod)
+        testSuite[#testSuite + 1] = M.getTestObject(testMethod)
       end
     end
 
-    testResult = {OK = 0, Failed = 0, Exception = 0}
+    local testResult = {OK = 0, Failed = 0, Exception = 0}
     for i, test in ipairs(testSuite) do
       local res = test:runTest()
       testResult[res] = testResult[res] + 1
@@ -61,3 +78,5 @@ local function createTestRunner()
 end
 
 main()
+
+return M
