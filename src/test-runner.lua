@@ -38,9 +38,9 @@ end
 -- @return #table       testCase object
 --
 function M.getTestObject (methodUnderTest)
-  obj = {method = methodUnderTest}
+  local obj = {method = methodUnderTest}
   obj.runTest = function (self)
-    local status, result = pcall(function() return self.methodUnderTest() end)
+    local status, result = pcall(function() return self.method() end)
     if status and result then return {status = "OK"}
     elseif status then return {status = "Failed"}
     else -- not status - test generated exception
@@ -53,12 +53,10 @@ end
 
 function M.createTestRunner()
   local runner = {}
-  runner.runTestSuite = function (self, modulename)
-    if not self and not modulename then
+  runner.runTestSuite = function (self, moduleUnderTest)
+    if not self and not moduleUnderTest then
       error("self and modulename not specified")
     end
-    -- TODO module import settings adjustment
-    local moduleUnderTest = require(modulename)
     local testSuite = {}
     for key, testMethod in pairs(moduleUnderTest) do
       if string.match(key, "test") then
@@ -69,7 +67,7 @@ function M.createTestRunner()
     local testResult = {OK = 0, Failed = 0, Exception = 0}
     for i, test in ipairs(testSuite) do
       local res = test:runTest()
-      testResult[res] = testResult[res] + 1
+      testResult[res.status] = testResult[res.status] + 1
     end
     return testResult
 
