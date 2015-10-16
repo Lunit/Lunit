@@ -24,8 +24,11 @@ _ENV = M
 local function main()
 
   local testRunner = M.createTestRunner();
-  for i, moduleName in ipairs(arg) do
-    testRunner:runTestSuite(moduleName)
+  local moduleUnderTest = require(arg[1])
+  local testResult = testRunner:runTestSuite(moduleUnderTest)
+  
+  for key, var in pairs(testResult) do
+  	print(string.format("%10s: %s", key, var))
   end
 
 
