@@ -29,7 +29,7 @@ local function main()
   for i = 1, #arg do
     local moduleUnderTest = require(arg[i])
     local testResult = testRunner:runTestSuite(moduleUnderTest)
-    print(string.format("\nMoudle under test is %s.\n", arg[i]))
+    print(string.format("\nMoudle under test is %s:", arg[i]))
     for key, var in pairs(testResult) do
       print(string.format("%10s: %s", key, var))
     end
