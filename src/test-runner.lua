@@ -1,4 +1,4 @@
------------------------------------------------
+-----------------------------------------------------------------------
 -- This module provide main fasility for running unit test
 -- on lua projects.
 --
@@ -6,8 +6,8 @@
 -- All test methods should have test in their names.
 --
 -- @module test-runner
--- 
--- 
+--
+--
 
 local M = {}
 
@@ -17,6 +17,8 @@ local arg = arg
 local string = string
 local pcall = pcall
 local require = require
+local error = error
+local print = print
 
 _ENV = M
 
@@ -24,11 +26,13 @@ _ENV = M
 local function main()
 
   local testRunner = M.createTestRunner();
-  local moduleUnderTest = require(arg[1])
-  local testResult = testRunner:runTestSuite(moduleUnderTest)
-  
-  for key, var in pairs(testResult) do
-  	print(string.format("%10s: %s", key, var))
+  for i = 1, #arg do
+    local moduleUnderTest = require(arg[i])
+    local testResult = testRunner:runTestSuite(moduleUnderTest)
+    print(string.format("\nMoudle under test is %s.\n", arg[i]))
+    for key, var in pairs(testResult) do
+      print(string.format("%10s: %s", key, var))
+    end
   end
 
 
