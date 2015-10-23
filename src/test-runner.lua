@@ -19,11 +19,11 @@ local require = require
 local error = error
 local print = print
 
-_ENV = M
+--_ENV = M
 
 
-function M.run(arg)
-
+function M.run(arg, path)
+  package.path = path
   local testRunner = M.createTestRunner();
   for i = 1, #arg do
     local moduleUnderTest = require(arg[i])

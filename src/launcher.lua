@@ -6,8 +6,8 @@ local M = {}
 
 -- command line arguments list
 local arg = arg
--- imported module search path
-local search_path = package.path
+---- imported module search path
+--local search_path = package.path
 
 local print = print
 local string_format = string.format
@@ -15,10 +15,14 @@ local os_exit =  os.exit
 local ipairs = ipairs
 local string_match = string.match
 local string_find = string.find
+local test_runner = require("test-runner")
+-- test runner deps, should be imported before resetting path
+local lunit = require("lunit")
 
 
 
-_ENV = M
+
+--_ENV = M
 
 local function main()
 
@@ -29,8 +33,9 @@ local function main()
 
   local testModuleLocation, fileName = M.extractArgumentsLocation(arg[1])
   local moduleUnderTestLocation = M.constructModuleLocation(testModuleLocation)
-  search_path = search_path or ""
-  search_path = search_path .. testModuleLocation .. "/?.lua;" .. moduleUnderTestLocation .. "/?.lua;"
+  package.path = ""
+  package.path = package.path .. ";" .. testModuleLocation .. "/?.lua;"
+   .. moduleUnderTestLocation .. "/?.lua;"
   
   -- forward test file names to test runner
   local testRunnerArguments = {}
@@ -40,7 +45,7 @@ local function main()
   	testRunnerArguments[#testRunnerArguments + 1] = name
   end
   
-  print(testRunnerArguments)
+  test_runner.run(testRunnerArguments, package.path)
   
 end
 ---------------------------------------------------------------------------
@@ -49,15 +54,15 @@ end
 -- @param #string absolutePath full (absolute) path to file
 -- @return #string path to directory, containing file and filename
 --                without extention
-function M.extractArgumentsLocation(absolutePath)
+function M.extractArgumentsLocation(path)
 
-  if not string_find(absolutePath, '(.*)/(*)') then
-    absolutePath = './' .. absolutePath
+  if not string_find(path, '(.*)/(*)') then
+    path = './' .. path
   end
   
 
   local location, filenameWithExtension, filename =
-    string_match(absolutePath, '(.*)/(([^./]*)%....)')
+    string_match(path, '(.*)/(([^./]*)%....)')
 
   return location, filename
 end
