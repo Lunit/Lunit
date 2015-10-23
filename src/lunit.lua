@@ -7,15 +7,6 @@ local M = {}
 -- Import section
 -- all module external dependencies are here
 
-local type = type
-local error = error
-
-
--- import section end
-
--- protect global environment
-_ENV = M
-
 
 ----------------------------------------------------------------------
 -- Tests whether expected match got or not.

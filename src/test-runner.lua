@@ -11,16 +11,6 @@
 
 local M = {}
 
-local ipairs = ipairs
-local pairs = pairs
-local string = string
-local pcall = pcall
-local require = require
-local error = error
-local print = print
-
---_ENV = M
-
 
 function M.run(arg, path)
   package.path = path

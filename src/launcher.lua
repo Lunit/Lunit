@@ -4,19 +4,13 @@
 --
 local M = {}
 
--- command line arguments list
-local arg = arg
----- imported module search path
-
-local string_format = string.format
-local ipairs = ipairs
 local test_runner = require("test-runner")
 
 
 local function main()
 
   if #arg < 1 then
-    print(string_format("Usage: %s <absolute path to testmodule> [secondTestmodule]", arg[0]))
+    print(string.format("Usage: %s <absolute path to testmodule> [secondTestmodule]", arg[0]))
     os.exit()
   end
 
