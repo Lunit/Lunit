@@ -13,18 +13,17 @@ local M = {}
 
 local ipairs = ipairs
 local pairs = pairs
-local arg = arg
 local string = string
 local pcall = pcall
 local require = require
 local error = error
 local print = print
 
-_ENV = M
+--_ENV = M
 
 
-local function main()
-
+function M.run(arg, path)
+  package.path = path
   local testRunner = M.createTestRunner();
   for i = 1, #arg do
     local moduleUnderTest = require(arg[i])
@@ -82,6 +81,6 @@ function M.createTestRunner()
   return runner
 end
 
-main()
+--main()
 
 return M
