@@ -13,7 +13,6 @@ local M = {}
 
 local ipairs = ipairs
 local pairs = pairs
-local arg = arg
 local string = string
 local pcall = pcall
 local require = require
@@ -23,7 +22,7 @@ local print = print
 _ENV = M
 
 
-local function main()
+function M.run(arg)
 
   local testRunner = M.createTestRunner();
   for i = 1, #arg do
@@ -82,6 +81,6 @@ function M.createTestRunner()
   return runner
 end
 
-main()
+--main()
 
 return M
