@@ -5,6 +5,7 @@
 local M = {}
 
 local test_runner = require("test-runner")
+local path_module = require("path")
 
 
 local function main()
@@ -14,7 +15,7 @@ local function main()
     os.exit()
   end
 
-  local testModuleLocation, fileName = M.extractArgumentsLocation(arg[1])
+  local testModuleLocation, fileName = path_module.extractArgumentsLocation(arg[1])
   local moduleUnderTestLocation = M.constructModuleLocation(testModuleLocation)
   package.path = package.path or ""
   package.path = package.path .. ";" .. testModuleLocation .. "/?.lua;"
@@ -24,7 +25,7 @@ local function main()
   local testRunnerArguments = {}
 
   for i, path in ipairs(arg) do
-    local dir, name = M.extractArgumentsLocation(path)
+    local dir, name = path_module.extractArgumentsLocation(path)
     testRunnerArguments[#testRunnerArguments + 1] = name
   end
 
