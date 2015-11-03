@@ -9,18 +9,33 @@ local path_module = require("path")
 
 
 local function main()
-
-  if #arg < 1 then
-    print(string.format("Usage: %s <absolute path to testmodule> [secondTestmodule]", arg[0]))
+  -- check if required arguments are present
+  if #arg < 1 or arg[1] == '--help' or arg[1] == '-h' then
+    print(string.format("Usage: %s [pathfile=<pathfile location>]" ..
+      " <absolute path to testmodule> [secondTestmodule]", arg[0]))
     os.exit()
   end
-
+  
+  -- add project source folders to build path
+  local projectBuildPath = ''
+  if string.find(arg[1], 'pathfile=') then
+    local fileName = string.gsub(arg[1], 'pathfile=', '')
+    local file = io.open(fileName, 'r')
+    if file then
+      projectBuildPath = projectBuildPath .. file:read('*a')
+      file:close()
+    end
+    -- remove first argument
+    table.remove(arg, 1)
+  end
+  
+  -- add test moudules location and possible source file location to build path
   local testModuleLocation, fileName = path_module.extractArgumentsLocation(arg[1])
   local moduleUnderTestLocation = M.constructModuleLocation(testModuleLocation)
   package.path = package.path or ""
   package.path = package.path .. ";" .. testModuleLocation .. "/?.lua;"
-    .. moduleUnderTestLocation .. "/?.lua;"
-
+    .. moduleUnderTestLocation .. "/?.lua;" .. projectBuildPath .. ";"
+    
   -- forward test file names to test runner
   local testRunnerArguments = {}
 
